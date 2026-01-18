@@ -1,0 +1,112 @@
+# Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Data Processing
+numpy==1.24.3
+pandas==2.1.3
+scipy==1.11.4
+scikit-learn==1.3.2
+
+# Deep Learning
+torch==2.1.1
+torchvision==0.16.1
+tensorflow==2.15.0
+keras==2.15.0
+
+# Reinforcement Learning
+stable-baselines3==2.2.1
+gym==0.26.2
+gymnasium==0.29.1
+
+# Technical Analysis
+ta-lib==0.4.28
+pandas-ta==0.3.14b0
+
+# Exchange Connectivity
+ccxt==4.1.74
+websockets==12.0
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+alembic==1.13.0
+redis==5.0.1
+asyncpg==0.29.0
+
+# Time Series
+statsmodels==0.14.0
+arch==6.2.0
+pmdarima==2.0.4
+
+# Hawkes Process
+tick==0.7.0.1
+hawkes==0.1.0
+
+# Optimization
+cvxpy==1.4.1
+scipy-optimize==1.0.0
+
+# API & WebSockets
+python-multipart==0.0.6
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0
+aiohttp==3.9.1
+websocket-client==1.6.4
+
+# Monitoring & Logging
+prometheus-client==0.19.0
+loguru==0.7.2
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3
+requests==2.31.0
+httpx==0.25.2
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# Data Validation
+marshmallow==3.20.1
+cerberus==1.3.5
+
+# Caching
+aiocache==0.12.2
+cachetools==5.3.2
+
+# Task Queue
+celery==5.3.4
+kombu==5.3.4
+
+# Model Serving
+onnx==1.15.0
+onnxruntime==1.16.3
+
+# Numerical Computing
+numba==0.58.1
+bottleneck==1.3.7
+
+# Plotting (for research)
+matplotlib==3.8.2
+seaborn==0.13.0
+plotly==5.18.0
+
+# Configuration
+pyyaml==6.0.1
+toml==0.10.2
+
+# Security
+cryptography==41.0.7
+bcrypt==4.1.1
+
+# Rate Limiting
+slowapi==0.1.9
+
+# CORS
+fastapi-cors==0.0.6
