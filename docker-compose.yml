@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: timescale/timescaledb:latest-pg14
+    container_name: crypto-quant-postgres
+    environment:
+      POSTGRES_DB: crypto_quant
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - crypto-quant-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: crypto-quant-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - crypto-quant-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: crypto-quant-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/crypto_quant
+      REDIS_URL: redis://redis:6379
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./backend:/app
+      - ./ml_models:/app/ml_models
+    networks:
+      - crypto-quant-network
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: crypto-quant-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - crypto-quant-network
+    environment:
+      VITE_API_URL: http://localhost:8000
+      VITE_WS_URL: ws://localhost:8000
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: crypto-quant-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - crypto-quant-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  crypto-quant-network:
+    driver: bridge
